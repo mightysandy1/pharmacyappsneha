@@ -30,7 +30,7 @@
             <tbody>
                 <tr class="modeltr">
                     <td>
-                        <select name="med_id[]" class="form-select" title="" required="" id="id_med_id">
+                        <select name="med_id[]" class="form-select medselector" title="" required="" id="id_med_id">
                             <option value="" selected="">---------</option>
                             {% for med in meds_list %}
                             <option value="{{med.id}}">{{med.name}}</option>
@@ -57,7 +57,17 @@
         const mth = document.querySelector('.modeltr').outerHTML;
         document.querySelector('#addmorebtn').addEventListener('click', function() {
             document.querySelector('tbody').insertAdjacentHTML('beforeend', mth);
+
+            new TomSelect(document.querySelectorAll(".medselector")[document.querySelectorAll(".medselector").length - 1]);
         });
+
+        const tomselectopts = {
+            allowEmptyOption: true,
+            create: true,
+            max: 1,
+        }
+
+        new TomSelect(".medselector")
 
         function removetr(e) {
             const ie = e.parentElement.parentElement
