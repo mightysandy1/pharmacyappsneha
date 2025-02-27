@@ -1,0 +1,7 @@
+run/*
+db.sqlite3
+venv/
+myenv/
+__pycache__/
+.DS_Store
+.idea/
