@@ -120,13 +120,28 @@ class BillCreateView(LoginRequiredMixin, CreateView):
     form_class = forms.BillDetailsForm
     redirect_field_name = 'yolo_site/billdetails_detail.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        ctx['meds_list'] = [{"id": i.id, "name": i.__str__()} for i in models.Medicine.objects.all()]
+
+        return ctx
+
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.generated_by = self.request.user
         obj.save()
-        obj.update_stock()
 
-        obj.med_id.save()
+        print(form.cleaned_data['items'])
+
+        for item in form.cleaned_data['items']:
+            med = item['med_id']
+            qty = item['quantity']
+            created = models.BillItems.objects.create(bill=obj, med_id=med, quantity=qty)
+            created.update_stock()
+
+
+
         self.object = obj
         return HttpResponseRedirect(self.get_success_url())
 

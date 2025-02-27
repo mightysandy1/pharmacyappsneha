@@ -3,28 +3,66 @@
 {% load bootstrap5 %}
 {% block content %}
 
-    <h1 class="display-5 fw-bold">Generate Bill</h1>
+    <h1 class="h3 fw-semibold">Generate Bill</h1>
     <hr>
-
-    <form method='post'>
+    <form action="" method="post">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-6">
-                {% bootstrap_field form.customer %}
-            </div>
-            <div class="col-6">
-                {% bootstrap_field form.med_id %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                {% bootstrap_field form.quantity %}
-            </div>
-        </div>
 
-        <p></p>
-        <div class="container rel">
-            <input class="btn btn-success btn-right" type="submit" value='Generate Bill'>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ error|escape }} {{field}}</strong>
         </div>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+        {% bootstrap_field form.customer %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="modeltr">
+                    <td>
+                        <select name="med_id[]" class="form-select" title="" required="" id="id_med_id">
+                            <option value="" selected="">---------</option>
+                            {% for med in meds_list %}
+                            <option value="{{med.id}}">{{med.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" name="quantity[]" min="0" class="form-control" placeholder="Quantity" title="" required="">
+                    </td>
+                    <td>
+                        <button class="btn text-white centricon" type="button" onclick="removetr(this)"><span class="material-icons md-24">close</span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-info mt-4" id="addmorebtn" type="button">+ Add More</button>
+        
+        <br>
+        <button class="btn btn-success mt-4" type="submit">Submit</button>
     </form>
+
+    {{ meds_list|json_script:"meds_list" }}
+    <script>
+        const mth = document.querySelector('.modeltr').outerHTML;
+        document.querySelector('#addmorebtn').addEventListener('click', function() {
+            document.querySelector('tbody').insertAdjacentHTML('beforeend', mth);
+        });
+
+        function removetr(e) {
+            const ie = e.parentElement.parentElement
+
+            ie.parentElement.removeChild(ie);
+        }
+    </script>
 {% endblock %}

@@ -30,15 +30,20 @@ class Medicine(models.Model):
     selling_price = models.FloatField()
     shelf_number = models.PositiveIntegerField()
     stock = models.PositiveIntegerField()
-    pack_quantity = models.CharField(max_length=128)
+    pack_quantity = models.PositiveIntegerField()
     # in the form of 10 X 3 for a pack of 3 strips containing 10 tabs each
     updated_on = models.DateTimeField(auto_now=True)
 
     def update_stock(self, quantity):
+        print("Updating stock")
         self.stock -= quantity
+        self.save()
 
     def get_absolute_url(self):
         return reverse('med_detail', kwargs={'pk':self.pk})
+    
+    def price_per_tablet(self):
+        return self.selling_price / self.pack_quantity
 
     def __str__(self):
         if not self.salt_quantity:
@@ -68,22 +73,37 @@ class Employee(models.Model):
 
 class BillDetails(models.Model):
     generated_by = models.ForeignKey('auth.User', editable=False, related_name='detail_billing_employee', on_delete=models.CASCADE)
-    med_id = models.ForeignKey('yolo_site.Medicine', related_name='billed_med', on_delete=models.CASCADE)
     customer = models.CharField(max_length=128)
-    quantity = models.PositiveIntegerField()
+    items = models.ManyToManyField(Medicine, through='BillItems')
     created_on = models.DateTimeField(auto_now_add=True)
 
-    def update_stock(self):
-        self.med_id.update_stock(self.quantity)
-
     def total_amount(self):
-        return self.quantity * self.med_id.selling_price
+        
+        bitems = BillItems.objects.filter(bill=self).prefetch_related('med_id')
+
+        total = 0
+
+        for item in bitems:
+            total += item.med_id.selling_price * item.quantity / item.med_id.pack_quantity
+
+        return total
 
     def get_absolute_url(self):
         return reverse('bill_detail', kwargs={"pk":self.pk})
 
     def __str__(self):
         return 'To '+ str(self.customer) + ' From ' + str(self.generated_by.username)
+
+class BillItems(models.Model):
+    bill = models.ForeignKey(BillDetails, on_delete=models.CASCADE)
+    med_id = models.ForeignKey(Medicine, related_name='med_items', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def update_stock(self):
+        self.med_id.update_stock(self.quantity)
+
+    def amt(self):
+        return self.med_id.selling_price * self.quantity / self.med_id.pack_quantity
 
 class Bill(models.Model):
     date = models.DateTimeField(auto_now_add=True)

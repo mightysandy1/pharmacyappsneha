@@ -12,7 +12,7 @@
 {#    fonts#}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 {#    material icons#}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -29,10 +29,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark navfont">
         <div class="container-fluid">
-            <a class="navbar-brand bigbrand" title="Homepage" href="{% url 'index' %}"><img src="{% static 'images/snehalogo.webp' %}" alt="logo img" width="90" height="40" class="d-inline-block align-text"> Sneha Pharmacy </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <a class="navbar-brand bigbrand" title="Homepage" href="{% url 'index' %}"><img src="{% static 'images/snehalogo.webp' %}" alt="logo img" class="d-inline-block align-text"> <span>Sneha Pharmacy</span> </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                
-            </ul>
+            </ul> -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-right">
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
@@ -54,15 +58,16 @@
                         <a class="nav-link active" aria-current="page">Welcome <span class="cap">{{ user.username }}</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" title="Logout" href="{% url 'logout' %}"><span class="material-icons md-32">logout</span></a>
+                        <a class="nav-link active centricon" aria-current="page" title="Logout" href="{% url 'logout' %}"><span class="material-icons md-32">logout</span></a>
                     </li>
 
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" title="Login" href="{% url 'login' %}"><span class="material-icons md-32">login</span></a>
+                        <a class="nav-link active centricon" aria-current="page" title="Login" href="{% url 'login' %}"><span class="material-icons md-32">login</span></a>
                     </li>
                 {% endif %}
             </ul>
+            </div>
         </div>
     </nav>
 
