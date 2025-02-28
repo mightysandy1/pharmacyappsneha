@@ -1,20 +1,54 @@
 {% extends 'yolo_site/base.html' %}
 {% block content %}
-        <h3 class="display-6 fw-bold"><u>Medicines Manager</u></h3>
+        <h3 class="fs-3 fw-semibold">Medicines Manager</h3>
         <br>
         <a class="btn btn-primary" href="{% url 'med_create' %}">Add Medicine</a>
         <hr>
-        {% for med in medicine_list %}
-            <h3><a title="Details" href="{% url 'med_detail' pk=med.pk %}">{{ med.name }}</a></h3>
-            <p>Company: {{ med.company.name }}</p>
-            {% if med.salt_quantity and med.unit %}
-                <p>Strength: {{ med.salt_quantity }} {{ med.unit }}</p>
-                {% elif med.salt_quantity %}
-                <p>Strength: {{ med.salt_quantity }}</p>
-            {% endif %}
-            <p>Last updated on: {{ med.updated_on }}</p>
-            <hr>
-        {% empty %}
-            <h3>No medicines yet!</h3>
-        {% endfor %}
+
+        <table id="medlisttable" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Salt</th>
+                    <th>Strength</th>
+                    <th>Shelf No</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for med in medicine_list %}
+                    <tr>
+                        <td><a title="Details" href="{% url 'med_detail' pk=med.pk %}">{{ med.name }}</a></td>
+                        <td>{{ med.company.name }}</td>
+                        <td>{{ med.salt_name }}</td>
+                        <td>{{ med.salt_quantity }} {{ med.unit }}</td>
+                        <td>{{ med.shelf_number }}</td>
+                        <td>{{ med.stock }}</td>
+                        <td>{{ med.selling_price }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">No medicines yet!</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script type="module">
+            new window.simpleDatatables.DataTable("#medlisttable", {
+                perPageSelect: [20, 50, 100],
+                sortable: false,
+                classes:  {
+                    active: "active",
+                    disabled: "disabled",
+                    selector: "form-select",
+                    paginationList: "pagination",
+                    paginationListItem: "page-item",
+                    paginationListItemLink: "page-link",
+                    input: "form-control",
+                }
+            })
+        </script>
 {% endblock %}

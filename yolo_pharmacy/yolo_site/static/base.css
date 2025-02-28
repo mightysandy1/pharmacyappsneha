@@ -87,6 +87,20 @@ h1.mainh1{
   animation:hue 10s infinite linear;
 }
 
+.datatable-dropdown {
+    font-size: 0.9rem;
+}
+
+.datatable-pagination .pagination a {
+    color: #fff;
+}
+
+
+.datatable-pagination .pagination .active a {
+    color: #111;
+}
+
+
 @keyframes hue{
   0%{filter: hue-rotate(0deg);}
   100%{filter:hue-rotate(360deg);}

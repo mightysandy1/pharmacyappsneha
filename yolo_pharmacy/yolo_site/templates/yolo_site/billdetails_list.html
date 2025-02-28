@@ -1,17 +1,45 @@
 {% extends 'yolo_site/base.html' %}
 {% block content %}
-        <h3 class="display-6 fw-bold"><u>Bills Information</u></h3>
+        <h3 class="fs-3 fw-semibold">Bills Information</h3>
         <br>
         <a class="btn btn-primary" href="{% url 'bill_create' %}">Generate Bill</a>
         <hr>
-        {% for bill in billdetails_list %}
-            <h3><a title="Details" href="{% url 'bill_detail' pk=bill.pk %}">Bill Number {{ bill.pk }}</a></h3>
-            <p>Customer: {{ bill.customer }}</p>
-            <p>Creation date & time: {{ bill.created_on }}</p>
-            <hr>
-    
+        <table id="medlisttable" class="table">
+            <thead>
+                <tr>
+                    <th>Bill No</th>
+                    <th>Customer Name</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in billdetails_list %}
+                <tr>
+                    <td><a title="Details" href="{% url 'bill_detail' pk=bill.pk %}">#{{ bill.pk }}</a></td>
+                    <td>{{ bill.customer }}</td>
+                    <td>{{ bill.created_on }}</td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No bills yet!</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-        {% empty %}
-            <h3>No Bills yet!</h3>
-        {% endfor %}
+        <script type="module">
+            new window.simpleDatatables.DataTable("#medlisttable", {
+                perPageSelect: [20, 50, 100],
+                sortable: false,
+                classes:  {
+                    active: "active",
+                    disabled: "disabled",
+                    selector: "form-select",
+                    paginationList: "pagination",
+                    paginationListItem: "page-item",
+                    paginationListItemLink: "page-link",
+                    input: "form-control",
+                }
+            })
+        </script>
 {% endblock %}
