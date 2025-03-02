@@ -7,6 +7,7 @@ from .views_print import print_bill
 
 urlpatterns = [
    path('print-bill/<int:bill_id>/', print_bill, name='print_bill'),
+   path('wprint-bill/<int:pk>/', views.bill_printweb, name='bill_printweb'),
 
     #path('download-bill/<int:pk>/', download_bill, name='download_bill'),
   

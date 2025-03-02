@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-size: 8px; /* base font size is 8px */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 10px;
+        }
+        .heading {
+            text-align: center;
+            font-weight: bold;
+        }
+        .address, .details, .footer {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .details th, .details td {
+            border: 1px solid rgb(94, 94, 94);
+            padding: 4px;
+            text-align: left;
+        }
+        .footer {
+            font-size: 8px; /* keeping the same font size throughout */
+            margin-top: 20px;
+        }
+        .address p {
+            margin: 0;
+        }
+        .line {
+            border-top: 1px solid rgb(107, 107, 107);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .total {
+            text-align: right;
+        }
+    </style>
+    <title>Tax Invoice</title>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <p>Tax Invoice/Retail Invoice</p>
+            <p>SNEHA MEDICAL STORE</p>
+        </div>
+        <div class="address">
+            <p>K.NO.47/B, UPPER GROUND FLOOR, SHOP NO.01,</p>
+            <p>DODDERI ROAD, HEJJALA VILLAGE, BIDADI HOBLI,</p>
+            <p>RAMANAGARA TQ AND DIST 562109</p>
+            <p>GSTIN No: 29IMWPK8394pZR     DL No: A-RG1-273744</p>
+            <p>Phone: 8748979246 / 9738133588</p>
+        </div>
+        <div class="line"></div>
+        <div class="details">
+            <table>
+                <tr>
+                    <th>Invoice no:</th>
+                    <td>{{bill.id}}</td>
+                    <th>Date:</th>
+                    <td>{{bill.created_on}}</td>
+                </tr>
+                <tr>
+                    <th>Patient Name:</th>
+                    <td colspan="3">{{bill.customer}}</td>
+                    <!-- <th>Age:</th>
+                    <td></td>
+                    <th>Gender:</th>
+                    <td></td> -->
+                </tr>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Price/pack</th>
+                    <th>Qty/pack</th>
+                    <th>Price/tablet</th>
+                    <th>Qty taken</th>
+                    <th>Amt</th>
+                </tr>
+                <!-- Add rows here for each product -->
+
+                {% for med in bill.billitems_set.all %}
+                <tr>
+                    <td>{{ med.med_id.name }}</td>
+                    <td>{{ med.med_id.selling_price }}</td>
+                    <td>{{ med.med_id.pack_quantity }}</td>
+                    <td>{{ med.med_id.price_per_tablet }}</td>
+                    <td>{{ med.quantity }}</td>
+                    <td>{{ med.amt }}</td>
+                </tr>
+                {% endfor %}
+
+                <tr>
+                    <td colspan="6" class="line"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="total">
+            <p>Total Amt: <b>{{ bill.total_amount }}</b></p>
+            <p>Sign of Pharmacist</p>
+        </div>
+        <div class="footer">
+            <p>Note:</p>
+            <ul>
+                <li>1. Reverse tax mechanism on Products are not applicable.</li>
+                <li>2. Exchange not accepted after 72 hrs of purchase & Bill is required.</li>
+                <li>3. Fridge items will not be taken back.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

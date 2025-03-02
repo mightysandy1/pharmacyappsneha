@@ -37,9 +37,9 @@
         </tbody>
     </table>
 
-    <button class="btn btn-info" onclick="window.print()">
+    <a class="btn btn-info" href="{% url 'bill_printweb' pk=billdetails.pk %}" target="_blank">
         Print Bill
-    </button>
+    </a>
     
     <a class="btn btn-danger" title="Delete" href="{% url 'bill_delete' pk=billdetails.pk %}"><span class="material-icons">delete</span></a>
 {% endblock %}

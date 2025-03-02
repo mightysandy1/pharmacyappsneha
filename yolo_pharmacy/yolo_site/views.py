@@ -156,3 +156,7 @@ class BillDetailView(LoginRequiredMixin, DetailView):
 class BillDeleteView(LoginRequiredMixin, DeleteView):
     model = models.BillDetails
     success_url = reverse_lazy('bill_list')
+
+def bill_printweb(request, pk):
+    bill = models.BillDetails.objects.get(id=pk)
+    return render(request, 'yolo_site/bill_printweb.html', {'bill': bill})

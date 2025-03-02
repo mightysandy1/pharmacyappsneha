@@ -109,7 +109,7 @@ h1.mainh1{
 
 @media print {
     @page {
-        size: landscape;
+        size: auto;
         margin: 0;
         
     }
