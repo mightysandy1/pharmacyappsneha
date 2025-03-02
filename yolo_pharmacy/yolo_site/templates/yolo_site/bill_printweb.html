@@ -100,9 +100,9 @@
                 {% for med in bill.billitems_set.all %}
                 <tr>
                     <td>{{ med.med_id.name }}</td>
-                    <td>{{ med.med_id.selling_price }}</td>
+                    <td>{{ med.med_id.selling_price|floatformat:2 }}</td>
                     <td>{{ med.med_id.pack_quantity }}</td>
-                    <td>{{ med.med_id.price_per_tablet }}</td>
+                    <td>{{ med.med_id.price_per_tablet|floatformat:2 }}</td>
                     <td>{{ med.quantity }}</td>
                     <td>{{ med.amt }}</td>
                 </tr>
@@ -114,7 +114,7 @@
             </table>
         </div>
         <div class="total">
-            <p>Total Amt: <b>{{ bill.total_amount }}</b></p>
+            <p>Total Amt: <b>{{ bill.total_amount|floatformat:1 }}</b></p>
             <p>Sign of Pharmacist</p>
         </div>
         <div class="footer">
