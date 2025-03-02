@@ -12,9 +12,9 @@
         {% if user.is_superuser %}
             <a class="btn btn-primary rightPadBtn bottomPadBtn" href="{% url 'register' %}">Add Employee</a>
             <a class="btn btn-info rightPadBtn bottomPadBtn" href="{% url 'emp_list' %}">Employees</a>
-            <a class="btn btn-primary rightPadBtn bottomPadBtn" href="{% url 'comp_create' %}">Add Company</a>
-            <a class="btn btn-info rightPadBtn bottomPadBtn" href="{% url 'comp_list' %}">Companies</a>
         {% endif %}
+        <a class="btn btn-primary rightPadBtn bottomPadBtn" href="{% url 'comp_create' %}">Add Company</a>
+        <a class="btn btn-info rightPadBtn bottomPadBtn" href="{% url 'comp_list' %}">Companies</a>
     {% else %}
         <h4><a style="color: antiquewhite;" href="{% url 'login' %}">Login</a> as an employee or an admin to access more options</h4>
         <p></p>
