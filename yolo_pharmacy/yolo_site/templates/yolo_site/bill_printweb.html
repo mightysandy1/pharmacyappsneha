@@ -104,7 +104,7 @@
                     <td>{{ med.med_id.pack_quantity }}</td>
                     <td>{{ med.med_id.price_per_tablet|floatformat:2 }}</td>
                     <td>{{ med.quantity }}</td>
-                    <td>{{ med.amt }}</td>
+                    <td>{{ med.amt|floatformat:2 }}</td>
                 </tr>
                 {% endfor %}
 
