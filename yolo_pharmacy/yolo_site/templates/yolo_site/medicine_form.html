@@ -15,7 +15,7 @@
                         {% bootstrap_field form.name %}
                     </div>
                     <div class="col-3">
-                      
+                      <div class="mb-3">
     <label class="form-label" for="{{ form.salt_name.id_for_label }}">Content Name</label>
     {{ form.salt_name }}
 </div>
@@ -27,10 +27,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2">
-                        
-                        {% bootstrap_field form.salt_quantity %}
-                    </div>
+                   <div class="col-2">
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.salt_quantity.id_for_label }}">Content Quantity</label>
+        {{ form.salt_quantity }}
+    </div>
+</div>
+
                     <div class="col-2">
                         {% bootstrap_field form.unit %}
                     </div>
