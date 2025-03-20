@@ -23,7 +23,7 @@ class Medicine(models.Model):
         mg = "mg"
         mcg = "mcg"
     name = models.CharField(max_length=128)
-    Content_name = models.CharField(max_length=256)
+    salt_name = models.CharField(max_length=256)
     salt_quantity = models.FloatField(blank=True, null=True)
     unit = models.CharField(max_length=128, choices=Type.choices, blank=True, null=True)
     buying_price = models.FloatField()
