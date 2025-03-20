@@ -24,13 +24,11 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
-                    <div class="mb-3">
-                        <label class="form-label" for="{{ form.salt_quantity.id_for_label }}"> C Quantity</label>
-                        
-                        {{ form.salt_quantity }}
-                    </div>
-                </div>
+               <div class="col-sm-2 p-1">
+    <label class="form-label m-0" for="{{ form.salt_quantity.id_for_label }}">Content Quantity</label>
+    {{ form.salt_quantity|add_class:"form-control form-control-sm" }}
+</div>
+
                 <div class="col-md-2">
                     {% bootstrap_field form.unit %}
                 </div>
