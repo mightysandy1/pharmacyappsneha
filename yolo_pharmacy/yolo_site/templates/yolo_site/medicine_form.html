@@ -15,8 +15,11 @@
                         {% bootstrap_field form.name %}
                     </div>
                     <div class="col-3">
-                       <label for="{{ form.salt_name.id_for_label }}">Content Name</label>
-{{ form.salt_name }}
+                      <div class="mb-3">
+    <label class="form-label" for="{{ form.salt_name.id_for_label }}">Content Name</label>
+    {{ form.salt_name }}
+</div>
+
 
                     </div>
                     <div class="col-2">
